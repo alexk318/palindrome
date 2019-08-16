@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<div align="center">
+    <h1>Регистрация</h1><br />
+    <div class="col-md-6">
+        <form action="{{ url_for('register') }}" method="POST">
+            <div class="form-group">
+                {% for forms in regsforms %}
+
+                {{ forms.label(class='control-label') }}
+                {{ forms(class='form-control') }}
+                {% endfor %}
+            </div>
+            <a role="button" href="/" class="btn btn-info"><< Назад</a>
+            <button type="submit" class="btn btn-success">Зарегистрироваться >></button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
