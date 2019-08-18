@@ -6,6 +6,11 @@ role_user_link = db.Table('role_user',
                           db.Column('role_id', db.Integer(), db.ForeignKey('role.id'))
                           )
 
+palindrome_user_link = db.Table('palindrome_user',
+                          db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+                          db.Column('palindrome_id', db.Integer(), db.ForeignKey('palindrome.id'))
+                          )
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key=True)
@@ -13,10 +18,17 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255))
     scores = db.Column(db.Integer(), default=0)
-
     active = db.Column(db.Boolean(), default=True)
 
-    roles = db.relationship('Role', secondary=role_user_link, backref=db.backref('users', lazy='dynamic'))
+    roles = db.relationship('Role',
+                            secondary=role_user_link,
+                            backref=db.backref('users',
+                                               lazy='dynamic'))
+
+    palindromes = db.relationship('Palindrome',
+                                  secondary=palindrome_user_link,
+                                  backref=db.backref('users',
+                                                     lazy='dynamic'))
 
     def __repr__(self):
         return 'ID: {}, Email: {}'.format(self.id, self.email)
@@ -29,4 +41,12 @@ class Role(db.Model, RoleMixin):
 
     def __repr__(self):
         return 'ID: {}, Name: {}'.format(self.id, self.name)
+
+
+class Palindrome(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    title = db.Column(db.String(255))
+
+    def __repr__(self):
+        return 'ID: {}, Title: {}'.format(self.id, self.title)
 

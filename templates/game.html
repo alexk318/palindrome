@@ -5,13 +5,29 @@
     <div align="center">
 
 
-        <h1>Введите Палиндром</h1><br/>
+        <h1>Введите Палиндром</h1>
 
-        {% if msg %}
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <h5><i>{{ message }}</i></h5>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <h5><i>У вас {{ scores }} очков</i></h5>
+
+        {% if notpalindrome %}
             <div class="alert alert-danger" role="alert">
-                {{ msg }}
+                {{ notpalindrome }}
             </div>
         {% endif %}
+
+        {% if ispalindrome %}
+            <div class="alert alert-success" role="alert">
+                {{ ispalindrome }}
+            </div>
+        {% endif %}<br/>
 
         <form action="{{ url_for('index') }}" method="POST">
 
@@ -23,7 +39,9 @@
             <a role="button" href="/logout" class="btn btn-info"><< Выйти</a>
             <button type="submit" class="btn btn-success">Готов >></button>
 
-        </form>
+        </form><br/>
+
+        <h2>Лучшие:</h2>
 
     </div>
 
