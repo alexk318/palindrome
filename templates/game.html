@@ -39,9 +39,23 @@
             <a role="button" href="/logout" class="btn btn-info"><< Выйти</a>
             <button type="submit" class="btn btn-success">Готов >></button>
 
-        </form><br/>
+        </form><br /><br />
 
         <h2>Лучшие:</h2>
+
+        <h5>
+            {% for user in best_users %}
+                {{ user.email }}
+
+                {% if current_user == user %}
+                    (Вы)
+                {% endif %}
+
+                ..
+                {{ user.scores }}
+                <br />
+            {% endfor %}
+        </h5>
 
     </div>
 
